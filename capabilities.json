@@ -1,0 +1,66 @@
+{
+    "dataBinding": {
+        "dataRoles": [
+            {
+                "name": "data",
+                "displayNameKey": "绑定数据",
+                "kind": "value"
+            },
+            {
+                "name": "dimensions",
+                "displayNameKey": "维度",
+                "kind": "grouping"
+            }
+        ],
+        "dataViewMappings": [
+            {
+                "plain": {
+                    "required": [
+                        {
+                            "dimensions": {
+                                "min": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "options": {
+        "visual":[{
+            "type": "interaction",
+            
+            "properties": [{
+                "name": "clickLeftMouse",
+                "type": "Enum",
+                "displayName": "鼠标左键选项",
+                "items": [
+                    {
+                        "value": "none",
+                        "displayNameKey": "无"
+                    },
+                    {
+                        "value": "showToolTip",
+                        "displayNameKey": "显示工具提示"
+                    },
+                    {
+                        "value": "Keep",
+                        "displayNameKey": "保留"
+                    },
+                    {
+                        "value": "Exclude",
+                        "displayNameKey": "排除"
+                    },
+                    {
+                        "value": "Jump",
+                        "displayNameKey": "跳转"
+                    }
+                ],
+                "defaultValue": "none"
+            }]
+        }
+        ]
+    },
+    "actions": [],
+    "analysis": []
+}
