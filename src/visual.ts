@@ -1,12 +1,11 @@
-import '../style/visual.less';
 import $ from 'jquery';
-import 'bootstrap-table/dist/bootstrap-table.min.css';
+import 'bootstrap';
 import 'bootstrap-table';
 import 'bootstrap-table/dist/bootstrap-table-locale-all.min.js'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-css';
-import 'bootstrap';
 
+import '../style/visual.less';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-table/dist/bootstrap-table.min.css';
 
 export default class Visual extends WynVisual {
 

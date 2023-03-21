@@ -6,6 +6,7 @@
       "target": "ES5",
       "esModuleInterop": true,
       "resolveJsonModule": true,
+      "skipLibCheck": true,
       "lib": [
         "esnext",
         "dom"
