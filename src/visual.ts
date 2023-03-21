@@ -44,7 +44,7 @@ export default class Visual extends WynVisual {
   private dom: HTMLDivElement;
   private options: VisualNS.IVisualUpdateOptions;
   private profile: any;
-  private isMock : boolean;
+  private isMock : boolean = true;
   
   private static root : Visual;
 
@@ -90,10 +90,9 @@ export default class Visual extends WynVisual {
     // this.selectionManager.clear();
     const selectionId = this.host.selectionService.createSelectionId();
     //keys
-    const profile_key = this.profile.dimensions.values.map((pro)=>{
+    this.profile.dimensions.values.map((pro)=>{
       selectionId.withDimension(pro,ele)
       console.log(ele[pro.display]);
-      
     })
     this.selectionManager.select(selectionId,true);
 
@@ -113,7 +112,7 @@ export default class Visual extends WynVisual {
     
     const plainDataView = options.dataViews[0] && options.dataViews[0].plain;
     if (plainDataView) {
-      Visual.root.isMock = true;
+      Visual.root.isMock = false;
       this.profile = plainDataView.profile;        
       // dimensions columns
       const _columns=plainDataView.profile.dimensions.values.map((x)=>(
@@ -139,7 +138,7 @@ export default class Visual extends WynVisual {
         data:plainDataView.data
       });
     }else{
-      Visual.root.isMock = false;
+      Visual.root.isMock = true;
       this.renderConfig = Visual.defaultConfig;
     }
     this.render();
@@ -275,6 +274,13 @@ public leftClick(pageX : number,pageY :number){
       }
     })
     return hiddenKey;
+  }
+
+  public onResize(){
+    console.log("start resize!");
+    
+    $("#_table").bootstrapTable('refresh');
+    $("#_table").bootstrapTable(this.renderConfig);
   }
 
   public getActionBarHiddenState(options: VisualNS.IVisualUpdateOptions): string[] {
