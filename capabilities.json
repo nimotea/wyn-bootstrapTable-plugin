@@ -29,7 +29,6 @@
     "options": {
         "visual":[{
             "type": "interaction",
-            
             "properties": [{
                 "name": "clickLeftMouse",
                 "type": "Enum",
@@ -58,6 +57,208 @@
                 ],
                 "defaultValue": "none"
             }]
+        },
+        {
+            "displayName" : "表格设置",
+            "properties" : [
+                {
+                    "name" : "__tab__textAlign",
+                    "type" : "Enum",
+                    "displayName" : "表格文本对齐",
+                    "items" :[
+                        {
+                            "value" : "left",
+                            "displayName" : "居左"
+                        },
+                        {
+                            "value" : "center",
+                            "displayName" : "居中"
+                        },
+                        {
+                            "value" : "right",
+                            "displayName" : "居右"
+                        }
+                    ],
+                    "defaultValue" : "center"
+                },
+                {
+                    "name" : "__tab__fontStyle",
+                    "displayName" : "表格字体",
+                    "type" : "TextStyle",
+                    "inheritFrom" : "dashboard.textStyle"
+                },
+                {
+                    "name" : "__tab__bgColor",
+                    "displayName" : "表格背景色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.backgroundColor"
+                },
+                {
+                    "name" : "__tab__borderWidth",
+                    "displayName" : "表头边框宽度",
+                    "type" : "Position",
+                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
+                },
+                {
+                    "name" : "__tab__borderColor",
+                    "displayName" : "表头边框颜色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.backgroundColor"
+                },
+                {
+                    "name" : "__tab__borderStyle",
+                    "displayName" : "表头边框类型",
+                    "type" : "Enum",
+                    "items" : [
+                        {
+                            "value" : "solid",
+                            "displayName" : "实线"
+                        },
+                        {
+                            "value" : "dashed",
+                            "displayName" : "虚线"
+                        }
+                    ],
+                    "defaultValue" : "solid"
+                }
+            ]
+        },
+        {
+            "displayName" : "表头设置",
+            "properties" : [
+                {
+                    "name" : "__head__enable",
+                    "type" : "Boolean",
+                    "displayName" : "开启表头配置",
+                    "defaultValue" : false
+                },
+                {
+                    "name" : "__head__textAlign",
+                    "type" : "Enum",
+                    "displayName" : "表头文本对齐",
+                    "items" :[
+                        {
+                            "value" : "left",
+                            "displayName" : "居左"
+                        },
+                        {
+                            "value" : "center",
+                            "displayName" : "居中"
+                        },
+                        {
+                            "value" : "right",
+                            "displayName" : "居右"
+                        }
+                    ],
+                    "defaultValue" : "center"
+                },
+                {
+                    "name" : "__head__fontStyle",
+                    "displayName" : "表头字体",
+                    "type" : "TextStyle",
+                    "inheritFrom" : "dashboard.textStyle"
+                },
+                {
+                    "name" : "__head__borderWidth",
+                    "displayName" : "表头边框宽度",
+                    "type" : "Position",
+                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
+                },
+                {
+                    "name" : "__head__borderColor",
+                    "displayName" : "表头边框颜色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.textStyle.color"
+                },
+                {
+                    "name" : "__head__borderStyle",
+                    "displayName" : "表头边框类型",
+                    "type" : "Enum",
+                    "items" : [
+                        {
+                            "value" : "solid",
+                            "displayName" : "实线"
+                        },
+                        {
+                            "value" : "dashed",
+                            "displayName" : "虚线"
+                        }
+                    ],
+                    "defaultValue" : "solid"
+                }
+                
+            ]
+        },
+        {
+            "displayName" : "表身设置",
+            "properties" : [
+                {
+                    "name" : "__row__enable",
+                    "type" : "Boolean",
+                    "displayName" : "开启表身配置",
+                    "defaultValue" : false
+                },
+                {
+                    "name" : "__row__textAlign",
+                    "type" : "Enum",
+                    "displayName" : "表头文本对齐",
+                    "items" :[
+                        {
+                            "value" : "left",
+                            "displayName" : "居左"
+                        },
+                        {
+                            "value" : "center",
+                            "displayName" : "居中"
+                        },
+                        {
+                            "value" : "right",
+                            "displayName" : "居右"
+                        }
+                    ],
+                    "defaultValue" : "center"
+                },
+                {
+                    "name" : "__row__fontStyle",
+                    "displayName" : "表身字体",
+                    "type" : "TextStyle",
+                    "inheritFrom" : "dashboard.textStyle"
+                },
+                {
+                    "name" : "__row__bgColor",
+                    "displayName" : "表身背景色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.backgroundColor"
+                },
+                {
+                    "name" : "__row__borderWidth",
+                    "displayName" : "表身边框宽度",
+                    "type" : "Position",
+                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
+                },
+                {
+                    "name" : "__row__borderColor",
+                    "displayName" : "表身边框颜色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.textStyle.color"
+                },
+                {
+                    "name" : "__row__borderStyle",
+                    "displayName" : "表身边框类型",
+                    "type" : "Enum",
+                    "items" : [
+                        {
+                            "value" : "solid",
+                            "displayName" : "实线"
+                        },
+                        {
+                            "value" : "dashed",
+                            "displayName" : "虚线"
+                        }
+                    ],
+                    "defaultValue" : "solid"
+                }
+            ]
         }
         ]
     },

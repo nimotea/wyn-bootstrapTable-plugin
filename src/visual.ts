@@ -7,9 +7,12 @@ import '../style/visual.less';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-table/dist/bootstrap-table.min.css';
 
+import textStyle from './textStyle';
+import bgStyle from './bgStyle';
+
 export default class Visual extends WynVisual {
 
-  private static defaultConfig: object = {
+  private static defaultConfig: any = {
     pagination: true,
     // pageSize:20,
     locale:'zh-CN',
@@ -30,9 +33,10 @@ export default class Visual extends WynVisual {
       name: 'Item 1',
       price: '$1'
     }
-  ]  
+  ],
 };
   private styleConfig : any;
+  private _resolveStyle : any;
   private renderConfig : object;
   private selectionManager: any;
   private selectionIds: any;
@@ -40,13 +44,19 @@ export default class Visual extends WynVisual {
   private dom: HTMLDivElement;
   private options: VisualNS.IVisualUpdateOptions;
   private profile: any;
+  private isMock : boolean;
+  
+  private static root : Visual;
 
+  private static globalPrefix : string = "__tab__";
+  private static headPrefix : string = "__head__";
+  private static rowPrefix : string = "__row__";
   
   
 
   constructor(dom: HTMLDivElement, host: VisualNS.VisualHost, options: VisualNS.IVisualUpdateOptions) {
     super(dom, host, options);
-
+    
     // document.oncontextmenu = function () { return false; };
 
 
@@ -61,12 +71,14 @@ export default class Visual extends WynVisual {
     const table = document.createElement("table") as HTMLTableElement;
     table.id ="_table";
     dom.appendChild(table);
-    const root= this;
+    Visual.root= this;
 
     $("#_table").bootstrapTable(Visual.defaultConfig);
     $("#_table").on('click-row.bs.table',function(row, ele, field){
-      root.selectData(ele as any);
-      root.leftClick(row.pageX,row.pageY);
+      if(!Visual.root.isMock){
+        Visual.root.selectData(ele as any);
+        Visual.root.leftClick(row.pageX,row.pageY);
+      }
     })
   }
 
@@ -93,9 +105,15 @@ export default class Visual extends WynVisual {
 
   public update(options: VisualNS.IVisualUpdateOptions) {
     this.styleConfig = options.properties;
-    const style=this.styleConfig;
+    this._resolveStyle= this.stylePropFilter();
+
+    Visual.defaultConfig.headerStyle = this.headerStyle;
+    Visual.defaultConfig.rowStyle = this.rowStyle;
+    Visual.defaultConfig.footerStyle = this.footerStyle;
+    
     const plainDataView = options.dataViews[0] && options.dataViews[0].plain;
     if (plainDataView) {
+      Visual.root.isMock = true;
       this.profile = plainDataView.profile;        
       // dimensions columns
       const _columns=plainDataView.profile.dimensions.values.map((x)=>(
@@ -121,14 +139,66 @@ export default class Visual extends WynVisual {
         data:plainDataView.data
       });
     }else{
+      Visual.root.isMock = false;
       this.renderConfig = Visual.defaultConfig;
     }
     this.render();
   }
 
+  public stylePropFilter(){
+    const globalConfig = {};
+    const headerConfig = {};
+    const rowConfig = {};
+    const globalPrefix = Visual.globalPrefix;
+    const headPrefix = Visual.headPrefix;
+    const rowPrefix = Visual.rowPrefix;
+
+    Object.keys(Visual.root.styleConfig).map(item=>{
+      if(item.indexOf(globalPrefix)>-1){
+        globalConfig[item.replace(globalPrefix,"")]=Visual.root.styleConfig[item];
+        return 
+      }else if(item.indexOf(headPrefix)>-1){
+        headerConfig[item.replace(headPrefix,"")]=Visual.root.styleConfig[item];
+        return 
+      }else if(item.indexOf(rowPrefix)>-1){
+        rowConfig[item.replace(rowPrefix,"")]=Visual.root.styleConfig[item];
+        return 
+      }
+    })
+
+    return {
+      global : globalConfig,
+      header : headerConfig,
+      row : rowConfig
+    }
+  }
+  
+  public headerStyle(){
+    const _css =  {};
+     const globalConfig = Visual.root._resolveStyle.global;
+     const headerConfig = Visual.root._resolveStyle.header;
+     textStyle($.extend({},globalConfig,headerConfig["enable"] && headerConfig || {}),_css);
+     bgStyle($.extend({},globalConfig,headerConfig["enable"] && headerConfig || {}),_css);
+     return { css : _css}
+  }
+
+  public footerStyle(){
+  /*   const _css =  {};
+     textStyle(Visual.root.styleConfig,_css);
+     return { css : _css} */
+  }
+
+  public rowStyle(){
+    const _css =  {};
+    const globalConfig = Visual.root._resolveStyle.global;
+     const rowConfig = Visual.root._resolveStyle.row;
+     textStyle($.extend({},globalConfig,rowConfig["enable"] && rowConfig || {}),_css);
+     bgStyle($.extend({},globalConfig,rowConfig["enable"] && rowConfig || {}),_css);
+     return { css : _css}
+  }
+
   public selectEvent(){
     const onMouseDown = (event:MouseEvent) => {
-      console.log("点击图表");
       event.stopPropagation();
       event.preventDefault();
       this.host.contextMenuService.hide();
@@ -151,7 +221,6 @@ export default class Visual extends WynVisual {
   const rightClick = (event:MouseEvent) => {
     document.oncontextmenu = function () { return false; };
     document.oncontextmenu = function () { return false; };
-    console.log("右键点击了");
         this.host.contextMenuService.show({
           position : {
             x : event.clientX,
@@ -163,7 +232,6 @@ export default class Visual extends WynVisual {
 }
 
 public leftClick(pageX : number,pageY :number){
-  console.log("执行命令了");
   
   const selectionIds = this.selectionManager.getSelectionIds();
   if(this.options.clickLeftMouse != 'none'){
@@ -180,24 +248,33 @@ public leftClick(pageX : number,pageY :number){
 }
 }
 
-
-
-
-
- 
-
-
   public render(){
     $("#_table").bootstrapTable('destroy');
     $("#_table").bootstrapTable(this.renderConfig);
   }
+  
 
   public onDestroy(): void {
 
   }
 
   public getInspectorHiddenState(options: VisualNS.IVisualUpdateOptions): string[] {
-    return null;
+    const styleConfig = options.properties;
+    let hiddenKey = [];
+    let isHiddenHeader = (styleConfig["__head__enable"] == false);
+    let isHiddenRow = (styleConfig["__row__enable"] == false);
+    Object.keys(styleConfig).map(key=>{
+      if(isHiddenHeader && key!= "__head__enable" && key.indexOf(Visual.headPrefix)>-1){
+        hiddenKey.push(key);
+        return;
+      }
+      
+      if(isHiddenRow && key!= "__row__enable" && key.indexOf(Visual.rowPrefix)>-1){
+        hiddenKey.push(key);
+        return;
+      }
+    })
+    return hiddenKey;
   }
 
   public getActionBarHiddenState(options: VisualNS.IVisualUpdateOptions): string[] {
