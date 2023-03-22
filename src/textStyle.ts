@@ -1,12 +1,13 @@
 const textStyle = (styleOption : any, css : any)=>{
     setextFont(styleOption,css);
     setextAlign(styleOption,css);
+    setSPFontStyle(styleOption,css);
     return css;
 }
 
 const setextFont = (option: any, css : object)=>{
 let fontStyle = option.fontStyle;
-if(fontStyle.fontFamily){
+if(fontStyle && fontStyle["fontFamily"]){
     css["font-size"] = fontStyle["fontSize"]
     css["font-family"] = fontStyle["fontFamily"]
     css["font-weight"] = fontStyle["fontWeight"]
@@ -14,7 +15,18 @@ if(fontStyle.fontFamily){
     css["color"] = fontStyle["color"]
 }
 
-}   
+}
+
+const setSPFontStyle = (option : any, css : object) => {
+    let fontColor = option.fontColor;
+    let fontSize = option.fontSize;
+    if(fontSize){
+        css["font-size"] = fontSize;
+    }
+    if(fontColor){
+        css["color"] = fontColor;
+    }
+}
 
 
 

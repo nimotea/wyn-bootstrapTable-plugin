@@ -6,9 +6,11 @@ import 'bootstrap-table/dist/bootstrap-table-locale-all.min.js'
 import '../style/visual.less';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-table/dist/bootstrap-table.min.css';
+import '../style/external.less';
 
 import textStyle from './textStyle';
 import bgStyle from './bgStyle';
+import overrideStyle from './overrideStyle';
 
 export default class Visual extends WynVisual {
 
@@ -51,6 +53,7 @@ export default class Visual extends WynVisual {
   private static globalPrefix : string = "__tab__";
   private static headPrefix : string = "__head__";
   private static rowPrefix : string = "__row__";
+  private static pagePrefix : string = "__page__";
   
   
 
@@ -97,11 +100,7 @@ export default class Visual extends WynVisual {
     this.selectionManager.select(selectionId,true);
 
   }
-  // custom cellStyle
-  public cellStyle(value:any,row:number,index:number){
-    
-  }
-
+ 
   public update(options: VisualNS.IVisualUpdateOptions) {
     this.styleConfig = options.properties;
     this._resolveStyle= this.stylePropFilter();
@@ -109,6 +108,9 @@ export default class Visual extends WynVisual {
     Visual.defaultConfig.headerStyle = this.headerStyle;
     Visual.defaultConfig.rowStyle = this.rowStyle;
     Visual.defaultConfig.footerStyle = this.footerStyle;
+    this.resolveGlobalStyle();
+    this.resolvePageStyle();
+
     
     const plainDataView = options.dataViews[0] && options.dataViews[0].plain;
     if (plainDataView) {
@@ -132,6 +134,9 @@ export default class Visual extends WynVisual {
         })
       });
 
+      // addCellStyle for columns
+      this.addColumnCellStyle(_columns);
+
       
       this.renderConfig = $.extend({},Visual.defaultConfig,{
         columns:_columns,
@@ -144,13 +149,41 @@ export default class Visual extends WynVisual {
     this.render();
   }
 
+  public addColumnCellStyle(_columns : any){
+    const columnOption = Visual.root._resolveStyle.global["columnOption"];
+    _columns.map(colConfig=>{
+      const colStyle = columnOption.filter((style)=>(style["column_name"]==colConfig["title"]));
+      if(colStyle && colStyle.length){
+        colStyle.map(col=>{
+          colConfig["cellStyle"] = this.genCellStyle(col);
+        })
+      }
+    })
+
+  }
+
+  // cellStyle function factory
+  public genCellStyle(styleConfig){
+    let _css =  {};
+     textStyle($.extend({},styleConfig),_css);
+     bgStyle($.extend({},styleConfig),_css);
+     console.log("_css :" + JSON.stringify(_css));
+     
+     return function (value,row,index){ 
+      return {css : _css}
+   }
+  }
+
+
   public stylePropFilter(){
     const globalConfig = {};
     const headerConfig = {};
     const rowConfig = {};
+    const pageConfig = {};
     const globalPrefix = Visual.globalPrefix;
     const headPrefix = Visual.headPrefix;
     const rowPrefix = Visual.rowPrefix;
+    const pagePrefix = Visual.pagePrefix;
 
     Object.keys(Visual.root.styleConfig).map(item=>{
       if(item.indexOf(globalPrefix)>-1){
@@ -162,13 +195,17 @@ export default class Visual extends WynVisual {
       }else if(item.indexOf(rowPrefix)>-1){
         rowConfig[item.replace(rowPrefix,"")]=Visual.root.styleConfig[item];
         return 
+      }else if(item.indexOf(pagePrefix)>-1){
+        pageConfig[item.replace(pagePrefix,"")]=Visual.root.styleConfig[item];
+        return 
       }
     })
 
     return {
       global : globalConfig,
       header : headerConfig,
-      row : rowConfig
+      row : rowConfig,
+      page : pageConfig
     }
   }
   
@@ -187,7 +224,7 @@ export default class Visual extends WynVisual {
      return { css : _css} */
   }
 
-  public rowStyle(){
+  public rowStyle(row : any,index){
     const _css =  {};
     const globalConfig = Visual.root._resolveStyle.global;
      const rowConfig = Visual.root._resolveStyle.row;
@@ -195,6 +232,29 @@ export default class Visual extends WynVisual {
      bgStyle($.extend({},globalConfig,rowConfig["enable"] && rowConfig || {}),_css);
      return { css : _css}
   }
+
+   
+
+
+  public resolveGlobalStyle(){
+    const _css =  {};
+     const globalConfig = Visual.root._resolveStyle.global;
+     bgStyle($.extend({},globalConfig),_css);
+     textStyle($.extend({},globalConfig),_css);
+     // global plugin always none-border
+     _css["border-width"] = 0;
+     $(this.dom).css(_css);
+  }
+
+  public resolvePageStyle(){
+    const globalConfig = Visual.root._resolveStyle.global;
+     const pageConfig = Visual.root._resolveStyle.page;
+     $(this.dom).append(overrideStyle($.extend({},globalConfig,pageConfig["enable"] && pageConfig || {})));
+  }
+
+  
+
+  
 
   public selectEvent(){
     const onMouseDown = (event:MouseEvent) => {
@@ -251,6 +311,8 @@ public leftClick(pageX : number,pageY :number){
     $("#_table").bootstrapTable('destroy');
     $("#_table").bootstrapTable(this.renderConfig);
   }
+
+ 
   
 
   public onDestroy(): void {
@@ -262,6 +324,7 @@ public leftClick(pageX : number,pageY :number){
     let hiddenKey = [];
     let isHiddenHeader = (styleConfig["__head__enable"] == false);
     let isHiddenRow = (styleConfig["__row__enable"] == false);
+    let isHiddenPage = (styleConfig["__page__enable"] == false);
     Object.keys(styleConfig).map(key=>{
       if(isHiddenHeader && key!= "__head__enable" && key.indexOf(Visual.headPrefix)>-1){
         hiddenKey.push(key);
@@ -272,16 +335,16 @@ public leftClick(pageX : number,pageY :number){
         hiddenKey.push(key);
         return;
       }
+
+      if(isHiddenPage && key!= "__page__enable" && key.indexOf(Visual.pagePrefix)>-1){
+        hiddenKey.push(key);
+        return;
+      }
     })
     return hiddenKey;
   }
 
-  public onResize(){
-    console.log("start resize!");
-    
-    $("#_table").bootstrapTable('refresh');
-    $("#_table").bootstrapTable(this.renderConfig);
-  }
+
 
   public getActionBarHiddenState(options: VisualNS.IVisualUpdateOptions): string[] {
     return null;

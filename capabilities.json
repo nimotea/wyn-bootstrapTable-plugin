@@ -95,19 +95,157 @@
                 },
                 {
                     "name" : "__tab__borderWidth",
-                    "displayName" : "表头边框宽度",
+                    "displayName" : "表格边框宽度",
                     "type" : "Position",
                     "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
                 },
                 {
                     "name" : "__tab__borderColor",
-                    "displayName" : "表头边框颜色",
+                    "displayName" : "表格边框颜色",
                     "type" : "Color",
                     "defaultValue" : "dashboard.backgroundColor"
                 },
                 {
                     "name" : "__tab__borderStyle",
-                    "displayName" : "表头边框类型",
+                    "displayName" : "表格边框类型",
+                    "type" : "Enum",
+                    "items" : [
+                        {
+                            "value" : "solid",
+                            "displayName" : "实线"
+                        },
+                        {
+                            "value" : "dashed",
+                            "displayName" : "虚线"
+                        }
+                    ],
+                    "defaultValue" : "solid"
+                },
+                {
+                    "name" : "__tab__columnOption",
+                    "displayName" : "列配置",
+                    "type" : "Collection",
+                    "itemShape" : [
+                        {
+                            "name" : "column_name",
+                            "displayName" : "列名",
+                            "type" : "Text"
+                        },
+                        {
+                            "name" : "fontColor",
+                            "displayName" : "字体颜色",
+                            "type" : "Color"
+                        },
+                        {
+                            "name" : "fontSize",
+                            "displayName" : "字体大小",
+                            "type" : "Text",
+                            "defaultValue" : "8px"
+                        },
+                        {
+                            "name" : "bgColor",
+                            "displayName" : "背景色",
+                            "type" : "Color",
+                            "defaultValue" : "dashboard.backgroundColor"
+                        },
+                        {
+                            "name" : "textAlign",
+                            "type" : "Enum",
+                            "displayName" : "列文本对齐",
+                            "items" :[
+                                {
+                                    "value" : "left",
+                                    "displayName" : "居左"
+                                },
+                                {
+                                    "value" : "center",
+                                    "displayName" : "居中"
+                                },
+                                {
+                                    "value" : "right",
+                                    "displayName" : "居右"
+                                }
+                            ],
+                            "defaultValue" :"center"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "displayName" : "分页配置",
+            "properties" :[
+                {
+                    "name" : "__page__enable",
+                    "type" : "Boolean",
+                    "displayName" : "开启分页配置",
+                    "defaultValue" : false
+                },
+                {
+                    "name" : "__page__buttonBgColor",
+                    "displayName" : "页容量按钮背景色",
+                    "type" : "Color",
+                    "defaultValue" : "black"
+                },
+                {
+                    "name" : "__page__buttonColor",
+                    "displayName" : "页容量按钮文字颜色",
+                    "type" : "Color",
+                    "defaultValue" : "white"
+                },
+                {
+                    "name" : "__page__pageActiveColor",
+                    "type" : "Color",
+                    "displayName" : "分页高亮颜色",
+                    "defaultValue" : "#336699"
+                },
+                {
+                    "name" : "__page__textAlign",
+                    "type" : "Enum",
+                    "displayName" : "分页文本对齐",
+                    "items" :[
+                        {
+                            "value" : "left",
+                            "displayName" : "居左"
+                        },
+                        {
+                            "value" : "center",
+                            "displayName" : "居中"
+                        },
+                        {
+                            "value" : "right",
+                            "displayName" : "居右"
+                        }
+                    ],
+                    "defaultValue" : "center"
+                },
+                {
+                    "name" : "__page__fontStyle",
+                    "displayName" : "分页字体",
+                    "type" : "TextStyle",
+                    "inheritFrom" : "dashboard.textStyle"
+                },
+                {
+                    "name" : "__page__bgColor",
+                    "displayName" : "分页背景色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.backgroundColor"
+                },
+                {
+                    "name" : "__page__borderWidth",
+                    "displayName" : "分页边框宽度",
+                    "type" : "Position",
+                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
+                },
+                {
+                    "name" : "__page__borderColor",
+                    "displayName" : "分页边框颜色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.backgroundColor"
+                },
+                {
+                    "name" : "__page__borderStyle",
+                    "displayName" : "分页边框类型",
                     "type" : "Enum",
                     "items" : [
                         {
@@ -121,6 +259,7 @@
                     ],
                     "defaultValue" : "solid"
                 }
+                  
             ]
         },
         {
