@@ -4,6 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build" : "wyn-visual-tools package",
+    "deve" : "wyn-visual-tools develop",
     "dev": "node script",
     "release": "webpack --mode=production",
     "compile": "webpack --mode=development"

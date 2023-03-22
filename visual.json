@@ -1,6 +1,6 @@
 {
     "id": "9741bee0-c3a2-11ed-a24a-9f6bf1425909",
-    "name": "bootstrap-table-comp",
+    "name": "简单维度聚合表格",
     "displayName": "",
     "displayNameKey": "",
     "icon": "visualIcon",
@@ -9,7 +9,7 @@
     "externalCss": [],
     "assets": {
         "images": {
-            "visualIcon": "assets/icon.png"
+            "visualIcon": "assets/table.png"
         }
     },
     "configuration": {},
