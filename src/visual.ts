@@ -142,11 +142,18 @@ export default class Visual extends WynVisual {
         columns:_columns,
         data:plainDataView.data
       });
+      this.fixTableHeight(this.renderConfig);
     }else{
       Visual.root.isMock = true;
       this.renderConfig = Visual.defaultConfig;
     }
     this.render();
+  }
+
+  public fixTableHeight(option : any) {
+    const height = Visual.root.dom.offsetHeight;
+    console.log(height);
+    option["height"]=height;
   }
 
   public addColumnCellStyle(_columns : any){
