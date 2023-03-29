@@ -36,6 +36,10 @@ export default class Visual extends WynVisual {
       price: '$1'
     }
   ],
+  paginationParts: ['pageList','pageSize','pageInfoShort'],
+  paginationSuccessivelySize : 0,
+  paginationPagesBySide:1,
+  paginationDetailHAlign:'left'
 };
   private styleConfig : any;
   private _resolveStyle : any;
@@ -136,8 +140,8 @@ export default class Visual extends WynVisual {
 
       // addCellStyle for columns
       this.addColumnCellStyle(_columns);
-
       
+
       this.renderConfig = $.extend({},Visual.defaultConfig,{
         columns:_columns,
         data:plainDataView.data
@@ -152,7 +156,6 @@ export default class Visual extends WynVisual {
 
   public fixTableHeight(option : any) {
     const height = Visual.root.dom.offsetHeight;
-    console.log(height);
     option["height"]=height;
   }
 
@@ -275,14 +278,14 @@ export default class Visual extends WynVisual {
 
 
 
-  const onMouseUp = (event:MouseEvent) =>{
+   const onMouseUp = (event:MouseEvent) =>{
 
     if(event.button === 2){
       rightClick(event);
     }else{
       return false;
     }
-  }
+  } 
 
   const rightClick = (event:MouseEvent) => {
     document.oncontextmenu = function () { return false; };
