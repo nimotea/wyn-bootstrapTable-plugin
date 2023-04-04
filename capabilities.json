@@ -82,6 +82,12 @@
                     "defaultValue" : "center"
                 },
                 {
+                    "name" : "__tab__dombgColor",
+                    "displayName" : "整体背景色",
+                    "type" : "Color",
+                    "defaultValue" : "dashboard.backgroundColor" 
+                },
+                {
                     "name" : "__tab__fontStyle",
                     "displayName" : "表格字体",
                     "type" : "TextStyle",
@@ -91,7 +97,7 @@
                     "name" : "__tab__bgColor",
                     "displayName" : "表格背景色",
                     "type" : "Color",
-                    "defaultValue" : "dashboard.backgroundColor"
+                    "defaultValue" : "#509dea"
                 },
                 {
                     "name" : "__tab__borderWidth",
@@ -103,7 +109,7 @@
                     "name" : "__tab__borderColor",
                     "displayName" : "表格边框颜色",
                     "type" : "Color",
-                    "defaultValue" : "dashboard.backgroundColor"
+                    "defaultValue" : "#000000"
                 },
                 {
                     "name" : "__tab__borderStyle",
@@ -401,6 +407,10 @@
         }
         ]
     },
-    "actions": [],
+    "actions": [{
+
+        "type": "focus"
+        
+        }],
     "analysis": []
 }

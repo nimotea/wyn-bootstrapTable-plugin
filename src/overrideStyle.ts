@@ -112,7 +112,8 @@ const JsonCssStringify = (css: any) :String =>{
     let keys = Object.keys(css);
     let str = JSON.stringify(css);
     str = str.replace(new RegExp('"','g'),"");
-    return str.replace(new RegExp(",","g"),";"); 
+    str = str.replace(new RegExp(",","g"),";"); 
+    return str.replace(/\(.*\)/g,function(x){return x.replace(/;/g,",")})
   }
 
 

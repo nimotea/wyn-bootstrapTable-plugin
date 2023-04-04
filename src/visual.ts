@@ -249,11 +249,25 @@ export default class Visual extends WynVisual {
   public resolveGlobalStyle(){
     const _css =  {};
      const globalConfig = Visual.root._resolveStyle.global;
-     bgStyle($.extend({},globalConfig),_css);
+    //  bgStyle($.extend({},globalConfig),_css);
      textStyle($.extend({},globalConfig),_css);
      // global plugin always none-border
      _css["border-width"] = 0;
+     this.hardCodeStyle();
      $(this.dom).css(_css);
+  }
+
+  public hardCodeStyle(){
+    const globalConfig = Visual.root._resolveStyle.global;
+    $(this.dom).append(
+      `<style>
+          body {
+            background-color : ${globalConfig.dombgColor} !important;
+          }
+       </style>
+      `
+
+    )
   }
 
   public resolvePageStyle(){
