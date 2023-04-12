@@ -56,7 +56,10 @@ export default class Visual extends WynVisual {
 
   private static globalPrefix : string = "__tab__";
   private static headPrefix : string = "__head__";
-  private static rowPrefix : string = "__row__";
+  
+  private static rowPrefix : string = "__row";
+  private static oddRowPrefix : string = "__rowOdd__";
+  private static evenRowPrefix : string = "__rowEven__";
   private static pagePrefix : string = "__page__";
   
   
@@ -188,11 +191,13 @@ export default class Visual extends WynVisual {
   public stylePropFilter(){
     const globalConfig = {};
     const headerConfig = {};
-    const rowConfig = {};
+    const oddRowConfig = {};
+    const evenRowConfig = {};
     const pageConfig = {};
     const globalPrefix = Visual.globalPrefix;
     const headPrefix = Visual.headPrefix;
-    const rowPrefix = Visual.rowPrefix;
+    const oddRowPrefix = Visual.oddRowPrefix;
+    const evenRowPrefix = Visual.evenRowPrefix;
     const pagePrefix = Visual.pagePrefix;
 
     Object.keys(Visual.root.styleConfig).map(item=>{
@@ -202,8 +207,11 @@ export default class Visual extends WynVisual {
       }else if(item.indexOf(headPrefix)>-1){
         headerConfig[item.replace(headPrefix,"")]=Visual.root.styleConfig[item];
         return 
-      }else if(item.indexOf(rowPrefix)>-1){
-        rowConfig[item.replace(rowPrefix,"")]=Visual.root.styleConfig[item];
+      }else if(item.indexOf(oddRowPrefix)>-1){
+        oddRowConfig[item.replace(oddRowPrefix,"")]=Visual.root.styleConfig[item];
+        return 
+      }else if(item.indexOf(evenRowPrefix)>-1){
+        evenRowConfig[item.replace(evenRowPrefix,"")]=Visual.root.styleConfig[item];
         return 
       }else if(item.indexOf(pagePrefix)>-1){
         pageConfig[item.replace(pagePrefix,"")]=Visual.root.styleConfig[item];
@@ -214,7 +222,8 @@ export default class Visual extends WynVisual {
     return {
       global : globalConfig,
       header : headerConfig,
-      row : rowConfig,
+      oddRow : oddRowConfig,
+      evenRow : evenRowConfig,
       page : pageConfig
     }
   }
@@ -237,10 +246,17 @@ export default class Visual extends WynVisual {
   public rowStyle(row : any,index){
     const _css =  {};
     const globalConfig = Visual.root._resolveStyle.global;
-     const rowConfig = Visual.root._resolveStyle.row;
-     textStyle($.extend({},globalConfig,rowConfig["enable"] && rowConfig || {}),_css);
-     bgStyle($.extend({},globalConfig,rowConfig["enable"] && rowConfig || {}),_css);
+     const oddRowConfig = Visual.root._resolveStyle.oddRow;
+     const evenRowConfig = Visual.root._resolveStyle.evenRow;
+     if(index%2==0){
+     textStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig || {}),_css);
+     bgStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig || {}),_css);
      return { css : _css}
+     }else {
+      textStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig || {}),_css);
+     bgStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig || {}),_css);
+     return { css : _css}
+     }
   }
 
    
@@ -248,6 +264,8 @@ export default class Visual extends WynVisual {
 
   public resolveGlobalStyle(){
     const _css =  {};
+     console.log("全局颜色start");
+
      const globalConfig = Visual.root._resolveStyle.global;
     //  bgStyle($.extend({},globalConfig),_css);
      textStyle($.extend({},globalConfig),_css);
@@ -255,6 +273,9 @@ export default class Visual extends WynVisual {
      _css["border-width"] = 0;
      this.hardCodeStyle();
      $(this.dom).css(_css);
+     console.log("全局颜色end");
+     
+     
   }
 
   public hardCodeStyle(){
@@ -332,8 +353,11 @@ public leftClick(pageX : number,pageY :number){
 }
 
   public render(){
+    console.log("render start");
     $("#_table").bootstrapTable('destroy');
     $("#_table").bootstrapTable(this.renderConfig);
+    console.log("render end");
+
   }
 
  
