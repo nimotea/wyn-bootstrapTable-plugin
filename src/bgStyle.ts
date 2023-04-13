@@ -19,8 +19,10 @@ const setBorderWidth = (option: any, css : object)=>{
     let borderWidth = option.borderWidth;
     
     if(borderWidth){
-        let _width = `${borderWidth.top}px ${borderWidth.right}px ${borderWidth.bottom}px ${borderWidth.left}px`
-        css["border-width"] = _width;
+        css["border-top-width"] = `${borderWidth.top}px`;
+        css["border-left-width"] = `${borderWidth.left}px`;
+        css["border-right-width"] = `${borderWidth.right}px`;
+        css["border-bottom-width"] = `${borderWidth.bottom}px`;
     }
 }
 const setBorderColor = (option: any, css : object)=>{

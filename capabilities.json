@@ -152,7 +152,7 @@
                             "name" : "bgColor",
                             "displayName" : "背景色",
                             "type" : "Color",
-                            "defaultValue" : "dashboard.backgroundColor"
+                            "inheritFrom" : "dashboard.backgroundColor"
                         },
                         {
                             "name" : "textAlign",
@@ -247,7 +247,7 @@
                     "name" : "__page__borderColor",
                     "displayName" : "分页边框颜色",
                     "type" : "Color",
-                    "defaultValue" : "dashboard.backgroundColor"
+                    "inheritFrom" : "dashboard.backgroundColor"
                 },
                 {
                     "name" : "__page__borderStyle",
@@ -304,32 +304,10 @@
                     "inheritFrom" : "dashboard.textStyle"
                 },
                 {
-                    "name" : "__head__borderWidth",
-                    "displayName" : "表头边框宽度",
-                    "type" : "Position",
-                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
-                },
-                {
-                    "name" : "__head__borderColor",
-                    "displayName" : "表头边框颜色",
+                    "name" : "__head__bgColor",
+                    "displayName" : "表头背景色",
                     "type" : "Color",
-                    "defaultValue" : "dashboard.textStyle.color"
-                },
-                {
-                    "name" : "__head__borderStyle",
-                    "displayName" : "表头边框类型",
-                    "type" : "Enum",
-                    "items" : [
-                        {
-                            "value" : "solid",
-                            "displayName" : "实线"
-                        },
-                        {
-                            "value" : "dashed",
-                            "displayName" : "虚线"
-                        }
-                    ],
-                    "defaultValue" : "solid"
+                    "defaultValue" : "#509dea"
                 }
                 
             ]
@@ -373,35 +351,7 @@
                     "name" : "__rowOdd__bgColor",
                     "displayName" : "奇数行表身背景色",
                     "type" : "Color",
-                    "defaultValue" : "dashboard.backgroundColor"
-                },
-                {
-                    "name" : "__rowOdd__borderWidth",
-                    "displayName" : "奇数行表身边框宽度",
-                    "type" : "Position",
-                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
-                },
-                {
-                    "name" : "__rowOdd__borderColor",
-                    "displayName" : "奇数行表身边框颜色",
-                    "type" : "Color",
-                    "defaultValue" : "dashboard.textStyle.color"
-                },
-                {
-                    "name" : "__rowOdd__borderStyle",
-                    "displayName" : "奇数行表身边框类型",
-                    "type" : "Enum",
-                    "items" : [
-                        {
-                            "value" : "solid",
-                            "displayName" : "实线"
-                        },
-                        {
-                            "value" : "dashed",
-                            "displayName" : "虚线"
-                        }
-                    ],
-                    "defaultValue" : "solid"
+                    "defaultValue" : "rgba(80, 157, 234, 0.5)"
                 },
                 {
                     "name" : "__rowEven__textAlign",
@@ -433,35 +383,7 @@
                     "name" : "__rowEven__bgColor",
                     "displayName" : "偶数行表身背景色",
                     "type" : "Color",
-                    "defaultValue" : "dashboard.backgroundColor"
-                },
-                {
-                    "name" : "__rowEven__borderWidth",
-                    "displayName" : "偶数行表身边框宽度",
-                    "type" : "Position",
-                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
-                },
-                {
-                    "name" : "__rowEven__borderColor",
-                    "displayName" : "偶数行表身边框颜色",
-                    "type" : "Color",
-                    "defaultValue" : "dashboard.textStyle.color"
-                },
-                {
-                    "name" : "__rowEven__borderStyle",
-                    "displayName" : "偶数行表身边框类型",
-                    "type" : "Enum",
-                    "items" : [
-                        {
-                            "value" : "solid",
-                            "displayName" : "实线"
-                        },
-                        {
-                            "value" : "dashed",
-                            "displayName" : "虚线"
-                        }
-                    ],
-                    "defaultValue" : "solid"
+                    "defaultValue" : "rgba(80,157,234,0.25)"
                 }
             ]
         }

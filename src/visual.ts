@@ -234,6 +234,7 @@ export default class Visual extends WynVisual {
      const headerConfig = Visual.root._resolveStyle.header;
      textStyle($.extend({},globalConfig,headerConfig["enable"] && headerConfig || {}),_css);
      bgStyle($.extend({},globalConfig,headerConfig["enable"] && headerConfig || {}),_css);
+     _css["border-bottom-width"]=`0px`;
      return { css : _css}
   }
 
