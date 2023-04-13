@@ -173,6 +173,11 @@
                                 }
                             ],
                             "defaultValue" :"center"
+                        },
+                        {
+                            "name" : "width",
+                            "type" : "Integer",
+                            "displayName" : "列宽"
                         }
                     ]
                 }

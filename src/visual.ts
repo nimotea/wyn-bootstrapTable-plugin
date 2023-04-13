@@ -169,6 +169,9 @@ export default class Visual extends WynVisual {
       if(colStyle && colStyle.length){
         colStyle.map(col=>{
           colConfig["cellStyle"] = this.genCellStyle(col);
+          if(col.width){
+            colConfig["width"] = col.width;
+          }
         })
       }
     })
@@ -177,13 +180,23 @@ export default class Visual extends WynVisual {
 
   // cellStyle function factory
   public genCellStyle(styleConfig){
-    let _css =  {};
-     textStyle($.extend({},styleConfig),_css);
-     bgStyle($.extend({},styleConfig),_css);
-     console.log("_css :" + JSON.stringify(_css));
+    const globalConfig = Visual.root._resolveStyle.global;
+     const oddRowConfig = Visual.root._resolveStyle.oddRow;
+     const evenRowConfig = Visual.root._resolveStyle.evenRow;
+    let _oddCss =  {};
+     textStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig ,styleConfig),_oddCss);
+     bgStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig ,styleConfig),_oddCss);
+    let _evenCss = {}; 
+    textStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig ,styleConfig),_evenCss);
+     bgStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig ,styleConfig),_evenCss);
      
      return function (value,row,index){ 
-      return {css : _css}
+      console.log(`cell info: ${value},${JSON.stringify(row)},${index}`);
+      if(index % 2 ==0){
+      return {css : _evenCss}
+      }else {
+      return {css : _oddCss}
+      }
    }
   }
 
@@ -265,7 +278,6 @@ export default class Visual extends WynVisual {
 
   public resolveGlobalStyle(){
     const _css =  {};
-     console.log("全局颜色start");
 
      const globalConfig = Visual.root._resolveStyle.global;
     //  bgStyle($.extend({},globalConfig),_css);
@@ -274,16 +286,16 @@ export default class Visual extends WynVisual {
      _css["border-width"] = 0;
      this.hardCodeStyle();
      $(this.dom).css(_css);
-     console.log("全局颜色end");
      
      
   }
 
   public hardCodeStyle(){
     const globalConfig = Visual.root._resolveStyle.global;
+    this.dom.style.backgroundColor = globalConfig.dombgColor;
     $(this.dom).append(
       `<style>
-          body {
+      .fixed-table-border {
             background-color : ${globalConfig.dombgColor} !important;
           }
        </style>
@@ -354,10 +366,8 @@ public leftClick(pageX : number,pageY :number){
 }
 
   public render(){
-    console.log("render start");
     $("#_table").bootstrapTable('destroy');
     $("#_table").bootstrapTable(this.renderConfig);
-    console.log("render end");
 
   }
 

@@ -3,7 +3,6 @@ const bgStyle = (styleOption : any, css : any)=>{
     setBorderWidth(styleOption,css);
     setBorderColor(styleOption,css);
     setBorderStyle(styleOption,css);
-    
     return css;
 }
 
