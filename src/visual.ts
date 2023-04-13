@@ -143,6 +143,7 @@ export default class Visual extends WynVisual {
 
       // addCellStyle for columns
       this.addColumnCellStyle(_columns);
+      this.addColumnFormatter(_columns);
       
 
       this.renderConfig = $.extend({},Visual.defaultConfig,{
@@ -176,6 +177,33 @@ export default class Visual extends WynVisual {
       }
     })
 
+  }
+
+  public addColumnFormatter(_columns : any) {
+    const colFormatter = [];
+     this.profile.data.values.map(colMeta=>{
+      if(colMeta.options["itemFormat"]){
+         colFormatter.push({
+          columnName : colMeta.display,
+          itemFormat : colMeta.options.itemFormat
+         })
+      }
+    });
+
+    _columns.forEach(element => {
+      colFormatter.forEach(col=>{
+        if(element.title == col.columnName && col.itemFormat){
+          element.formatter = this.genValueFormatter(col.itemFormat);
+        }
+      }
+      )
+    });
+  }
+
+  public genValueFormatter(itemFormat:string){
+    return function(value,row){
+     return Visual.root.host.formatService.format(itemFormat,value)
+    }
   }
 
   // cellStyle function factory

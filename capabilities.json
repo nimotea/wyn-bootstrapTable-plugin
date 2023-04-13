@@ -4,7 +4,12 @@
             {
                 "name": "data",
                 "displayNameKey": "绑定数据",
-                "kind": "value"
+                "kind": "value",
+                "itemOptions": [{
+                    "name": "itemFormat",
+                    "type": "format",
+                    "displayName": "数据格式"    
+                }]
             },
             {
                 "name": "dimensions",
