@@ -412,6 +412,10 @@ public leftClick(pageX : number,pageY :number){
     let isHiddenHeader = (styleConfig["__head__enable"] == false);
     let isHiddenRow = (styleConfig["__row__enable"] == false);
     let isHiddenPage = (styleConfig["__page__enable"] == false);
+
+    // __tab__height 只作为 __head__height 的默认值存在
+    hiddenKey.push("__tab__height")
+
     Object.keys(styleConfig).map(key=>{
       if(isHiddenHeader && key!= "__head__enable" && key.indexOf(Visual.headPrefix)>-1){
         hiddenKey.push(key);

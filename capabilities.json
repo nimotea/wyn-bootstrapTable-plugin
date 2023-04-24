@@ -93,6 +93,12 @@
                     "defaultValue" : "#000000" 
                 },
                 {
+                    "name" : "__tab__height",
+                    "displayName" : "表格高度",
+                    "type" : "Integer",
+                    "defaultValue" : 30
+                },
+                {
                     "name" : "__tab__fontStyle",
                     "displayName" : "表格字体",
                     "type" : "TextStyle",
