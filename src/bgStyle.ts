@@ -3,6 +3,7 @@ const bgStyle = (styleOption : any, css : any)=>{
     setBorderWidth(styleOption,css);
     setBorderColor(styleOption,css);
     setBorderStyle(styleOption,css);
+    setHeight(styleOption,css);
     return css;
 }
 
@@ -36,5 +37,12 @@ const setBorderStyle = (option: any, css : object)=>{
             css["border-style"] = borderStyle;
         }
     }
+
+const setHeight = (option : any, css : object)=>{
+    let height = option.height;
+    if(height){
+        css["line-height"] = `${height}px`;
+    }
+}    
 
 export default bgStyle;

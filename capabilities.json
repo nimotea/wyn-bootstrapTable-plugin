@@ -308,6 +308,12 @@
                     "defaultValue" : "center"
                 },
                 {
+                    "name" : "__head__height",
+                    "displayName" : "表头高度",
+                    "type" : "Integer",
+                    "defaultValue" : 44
+                },
+                {
                     "name" : "__head__fontStyle",
                     "displayName" : "表头字体",
                     "type" : "TextStyle",
@@ -352,6 +358,12 @@
                     "defaultValue" : "center"
                 },
                 {
+                    "name" : "__rowOdd__height",
+                    "displayName" : "奇数表格高度",
+                    "type" : "Integer",
+                    "defaultValue" : 30
+                },
+                {
                     "name" : "__rowOdd__fontStyle",
                     "displayName" : "奇数行表身字体",
                     "type" : "TextStyle",
@@ -382,6 +394,12 @@
                         }
                     ],
                     "defaultValue" : "center"
+                },
+                {
+                    "name" : "__rowEven__height",
+                    "displayName" : "偶数表格高度",
+                    "type" : "Integer",
+                    "defaultValue" : 30
                 },
                 {
                     "name" : "__rowEven__fontStyle",

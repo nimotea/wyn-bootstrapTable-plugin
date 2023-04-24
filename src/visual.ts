@@ -83,7 +83,7 @@ export default class Visual extends WynVisual {
     dom.appendChild(table);
     Visual.root= this;
 
-    $("#_table").bootstrapTable(Visual.defaultConfig);
+    // $("#_table").bootstrapTable(Visual.defaultConfig);
     $("#_table").on('click-row.bs.table',function(row, ele, field){
       if(!Visual.root.isMock){
         Visual.root.selectData(ele as any);
