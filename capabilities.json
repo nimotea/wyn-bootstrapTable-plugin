@@ -114,7 +114,7 @@
                     "name" : "__tab__borderWidth",
                     "displayName" : "表格边框宽度",
                     "type" : "Position",
-                    "defaultValue" : { "top" : 1,"left": 1,"right": 1 ,"bottom":1}
+                    "defaultValue" : { "top" : 0,"left": 0,"right": 0 ,"bottom":0}
                 },
                 {
                     "name" : "__tab__borderColor",
@@ -251,7 +251,7 @@
                     "name" : "__page__bgColor",
                     "displayName" : "分页背景色",
                     "type" : "Color",
-                    "inheritFrom" :"dashboard.backgroundColor"
+                    "defaultValue" :"rgba(0,0,0,0)"
                 },
                 {
                     "name" : "__page__borderWidth",
