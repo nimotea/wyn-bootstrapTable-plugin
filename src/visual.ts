@@ -68,6 +68,7 @@ export default class Visual extends WynVisual {
     super(dom, host, options);
     
     // document.oncontextmenu = function () { return false; };
+    dom.style.backgroundColor="rgba(0,0,0,0)";
 
 
     // init global manager;

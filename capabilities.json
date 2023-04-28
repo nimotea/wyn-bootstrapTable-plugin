@@ -90,7 +90,7 @@
                     "name" : "__tab__dombgColor",
                     "displayName" : "整体背景色",
                     "type" : "Color",
-                    "defaultValue" : "#000000" 
+                    "inheritFrom" : "dashboard.backgroundColor"
                 },
                 {
                     "name" : "__tab__height",
@@ -251,7 +251,7 @@
                     "name" : "__page__bgColor",
                     "displayName" : "分页背景色",
                     "type" : "Color",
-                    "defaultValue" : "#000000"
+                    "inheritFrom" :"dashboard.backgroundColor"
                 },
                 {
                     "name" : "__page__borderWidth",
