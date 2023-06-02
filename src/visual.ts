@@ -11,6 +11,7 @@ import '../style/external.less';
 import textStyle from './textStyle';
 import bgStyle from './bgStyle';
 import overrideStyle from './overrideStyle';
+// import '@mdi/font/css/materialdesignicons.min.css';
 
 export default class Visual extends WynVisual {
 
@@ -36,6 +37,7 @@ export default class Visual extends WynVisual {
       price: '$1'
     }
   ],
+  showJumpTo: "true",
   paginationParts: ['pageList','pageSize','pageInfoShort'],
   paginationSuccessivelySize : 0,
   paginationPagesBySide:1,
@@ -68,7 +70,7 @@ export default class Visual extends WynVisual {
     super(dom, host, options);
     
     // document.oncontextmenu = function () { return false; };
-    dom.style.backgroundColor="rgba(0,0,0,0)";
+    // dom.style.backgroundColor="rgba(0,0,0,0)";
 
 
     // init global manager;

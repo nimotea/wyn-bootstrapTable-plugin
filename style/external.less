@@ -13,6 +13,10 @@
 .table > :not(caption) > * > * {
   padding: 0rem;
 }
+
+.bootstrap-table .fixed-table-container .table thead th .sortable {
+   padding-right: 0px !important; 
+}
 /* .table.table-bordered.table-hover>thead>tr>th:first-child {
   border-left-width: 0px !important;
 }
@@ -24,4 +28,24 @@
 }
 .table.table-bordered.table-hover>tbody>tr>td:last-child {
   border-right-width: 0px !important;
+} */
+
+.bootstrap-table .fixed-table-container .table thead th .both {
+  background-image: none !important;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .asc {
+  background-image: url("./sort-ascending.png") !important;
+}
+
+/* .bootstrap-table .fixed-table-container .table thead th .asc:before {
+  content: "\F4BC";
+} */
+
+.bootstrap-table .fixed-table-container .table thead th .desc {
+  background-image: url("./sort-descending.png") !important;
+}
+
+/* .bootstrap-table .fixed-table-container .table thead th .desc:before {
+  content: "\F4BD";
 } */

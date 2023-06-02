@@ -9,7 +9,9 @@
     "externalCss": [],
     "assets": {
         "images": {
-            "visualIcon": "assets/table.png"
+            "visualIcon": "assets/table.png",
+            "descIcon":"assets/sort-descending.png",
+            "ascIcon":"assets/sort-ascending.png"
         }
     },
     "configuration": {},
