@@ -148,17 +148,27 @@ export default class Visual extends WynVisual {
       this.addColumnCellStyle(_columns);
       this.addColumnFormatter(_columns);
       
-
+      
       this.renderConfig = $.extend({},Visual.defaultConfig,{
         columns:_columns,
         data:plainDataView.data
       });
+      this.setSortBy(this.renderConfig);
       this.fixTableHeight(this.renderConfig);
     }else{
       Visual.root.isMock = true;
       this.renderConfig = Visual.defaultConfig;
     }
     this.render();
+  }
+
+  public setSortBy(option:Object){
+    let sortField = Visual.root._resolveStyle.global["sortField"];
+    let sortType = Visual.root._resolveStyle.global["sortType"];
+    if(sortField){
+      option["sortName"] = sortField;
+      option["sortOrder"] = sortType;
+    }
   }
 
   public fixTableHeight(option : any) {
@@ -188,7 +198,8 @@ export default class Visual extends WynVisual {
       if(colMeta.options["itemFormat"]){
          colFormatter.push({
           columnName : colMeta.display,
-          itemFormat : colMeta.options.itemFormat
+          itemFormat : colMeta.options.itemFormat,
+          itemUnit: colMeta.options.itemDisplayUnit
          })
       }
     });
@@ -196,16 +207,23 @@ export default class Visual extends WynVisual {
     _columns.forEach(element => {
       colFormatter.forEach(col=>{
         if(element.title == col.columnName && col.itemFormat){
-          element.formatter = this.genValueFormatter(col.itemFormat);
+          element.formatter = this.genValueFormatter(col.itemFormat,col.itemUnit);
         }
       }
       )
     });
   }
 
-  public genValueFormatter(itemFormat:string){
+  public genValueFormatter(itemFormat:string,itemUnit:any){
     return function(value,row){
-     return Visual.root.host.formatService.format(itemFormat,value)
+      let unit = null;
+      if(Visual.root.host.formatService.isAutoDisplayUnit(itemUnit)){
+        // auto unit
+        unit = Visual.root.host.formatService.getAutoDisplayUnit(value)
+      }else{
+        unit = itemUnit;
+      }
+     return Visual.root.host.formatService.format(itemFormat,value,unit)
     }
   }
 

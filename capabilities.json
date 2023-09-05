@@ -5,11 +5,16 @@
                 "name": "data",
                 "displayNameKey": "绑定数据",
                 "kind": "value",
-                "itemOptions": [{
-                    "name": "itemFormat",
-                    "type": "format",
-                    "displayName": "数据格式"    
-                }]
+                "itemOptions": [
+                    {
+                        "name": "itemDisplayUnit",
+                        "type": "displayUnit",
+                        "displayName": "数据单位"
+                    },{
+                        "name": "itemFormat",
+                        "type": "format",
+                        "displayName": "数据格式"    
+                    }]
             },
             {
                 "name": "dimensions",
@@ -62,6 +67,11 @@
                 ],
                 "defaultValue": "none"
             }]
+        },
+        {
+            "type" : "title",
+            "defaultValue": "表格数据"
+            
         },
         {
             "displayName" : "表格设置",
@@ -191,6 +201,25 @@
                             "displayName" : "列宽"
                         }
                     ]
+                },{
+                    "name" : "__tab__sortField",
+                    "type" : "Text",
+                    "displayName" : "默认排序字段"
+                },{
+                    "name" : "__tab__sortType",
+                    "type" : "Enum",
+                    "displayName" : "默认排序方式",
+                    "items" :[
+                        {
+                            "value" : "desc",
+                            "displayName" : "倒序"
+                        },
+                        {
+                            "value" : "asc",
+                            "displayName" : "顺序"
+                        }
+                    ],
+                    "defaultValue" : "desc"
                 }
             ]
         },
@@ -427,6 +456,10 @@
 
         "type": "focus"
         
+        },{
+            "type" : "export",
+            "disablePNG": true,
+            "disableSVG": true
         }],
     "analysis": []
 }
