@@ -104,7 +104,7 @@ export default class Visual extends WynVisual {
     const selectionId = this.host.selectionService.createSelectionId();
     //keys
     this.profile.tooltipFields.values.map((pro)=>{
-      selectionId.withDimension(pro,ele)
+      selectionId.withMeasure(pro,ele)
       console.log(ele[pro.display]);
     })
     this.profile.dimensions.values.map((pro)=>{
