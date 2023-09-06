@@ -20,6 +20,11 @@
                 "name": "dimensions",
                 "displayNameKey": "维度",
                 "kind": "grouping"
+            },
+            {
+                "name": "tooltipFields",
+                "displayNameKey": "工具提示",
+                "kind": "attributeOrValue"
             }
         ],
         "dataViewMappings": [
