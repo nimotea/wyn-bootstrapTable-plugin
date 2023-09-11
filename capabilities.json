@@ -465,6 +465,10 @@
             "type" : "export",
             "disablePNG": true,
             "disableSVG": true
-        }],
+        },{
+
+            "type": "filter"
+            
+            }],
     "analysis": []
 }
