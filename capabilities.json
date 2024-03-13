@@ -181,6 +181,12 @@
                             "inheritFrom" : "dashboard.backgroundColor"
                         },
                         {
+                            "name" : "overrideBgColor",
+                            "displayName" : "覆盖背景色",
+                            "type" : "Boolean",
+                            "defaultValue" : true
+                        },
+                        {
                             "name" : "textAlign",
                             "type" : "Enum",
                             "displayName" : "列文本对齐",

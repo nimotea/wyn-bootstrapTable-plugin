@@ -239,16 +239,22 @@ export default class Visual extends WynVisual {
     let _oddCss =  {};
      textStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig ,styleConfig),_oddCss);
      bgStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig ,styleConfig),_oddCss);
+     if(!styleConfig["overrideBgColor"]){
+      _oddCss["background-color"] = ($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && oddRowConfig))["bgColor"];
+     }
     let _evenCss = {}; 
     textStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig ,styleConfig),_evenCss);
      bgStyle($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig ,styleConfig),_evenCss);
-     
+     if(!styleConfig["overrideBgColor"]){
+      _evenCss["background-color"] = ($.extend({},globalConfig,Visual.root.styleConfig["__row__enable"] && evenRowConfig))["bgColor"];
+     }
      return function (value,row,index){ 
-      console.log(`cell info: ${value},${JSON.stringify(row)},${index}`);
+      // console.log(`cell info: ${value},${JSON.stringify(row)},${index}`);
+      // 0 row oddCss
       if(index % 2 ==0){
-      return {css : _evenCss}
-      }else {
       return {css : _oddCss}
+      }else {
+      return {css : _evenCss}
       }
    }
   }
