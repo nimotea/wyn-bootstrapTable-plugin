@@ -55,6 +55,8 @@ export default class Visual extends WynVisual {
   private isMock : boolean = true;
   
   private static root : Visual;
+  private static orderField: string;
+  private static orderBy : string;
 
   private static globalPrefix : string = "__tab__";
   private static headPrefix : string = "__head__";
@@ -93,6 +95,71 @@ export default class Visual extends WynVisual {
         Visual.root.leftClick(row.pageX,row.pageY);
       }
     })
+
+    $('#_table').on('sort.bs.table', function(e, name, order) {
+      Visual.orderField = name;
+      Visual.orderBy = order
+    });
+
+    this.host.eventService.registerOnCustomEventCallback((name: string) => {
+      if(name == "exportReport" && !Visual.root.isMock){
+        this.exportReport()
+      }
+    });
+  }
+
+  public exportReport(){
+    let reportId = Visual.root._resolveStyle.global["bindReportId"];
+    if(!reportId){
+      return;
+    }
+    let url1 = `/api/v2.0/reporting/export-templates`;
+    fetch(url1)
+      .then(response => response.json())  // 解析响应为 JSON
+      .then(data => {
+        let excelTemplateId = data.filter(item=>item.name=='Excel')[0].id;
+        return excelTemplateId;
+      })
+      .then(reportTemplateId => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        let option = {
+          headers : myHeaders,
+          method: 'POST',
+          body: this.generateReportParam(),
+        }
+        return fetch(`/api/v2.0/reporting/reports/${reportId}/export/${reportTemplateId}`,option)
+      })
+      .then(response => response.json())
+      .then(data => {
+        let resultUrl = data.resultUrl || "";
+        if(resultUrl){
+          let downloadUrl = `/${resultUrl}`
+          const element = document.createElement('a');
+          element.setAttribute('href', downloadUrl);
+          element.setAttribute('download', downloadUrl);
+          element.style.display = 'none';
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+        }
+      })
+
+
+
+  }
+
+  public generateReportParam():string{
+    let option = {"parameters": {
+      
+    }};
+    if(Visual.root._resolveStyle.global["bindReportAutoOrderBy"]){
+      if(Visual.orderField){
+        option.parameters["orderField"] = [Visual.orderField];
+        option.parameters["orderBy"] = [Visual.orderBy];
+      }
+    }
+    return JSON.stringify(option);
   }
 
   public selectData(ele:any){

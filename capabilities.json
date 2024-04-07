@@ -231,6 +231,16 @@
                         }
                     ],
                     "defaultValue" : "desc"
+                },{
+                    "name" : "__tab__bindReportId",
+                    "type" : "Text",
+                    "displayName" : "导出报表",
+                    "defaultValue" : ""
+                },{
+                    "name" : "__tab__bindReportAutoOrderBy",
+                    "type" : "Boolean",
+                    "displayName" : "报表自动排序",
+                    "defaultValue" : true
                 }
             ]
         },
@@ -475,6 +485,13 @@
 
             "type": "filter"
             
-            }],
+            },
+            {
+                "name": "exportReport",
+                "type": "event",
+                "icon": "export",
+                "displayName": "导出报表"
+                
+                }],
     "analysis": []
 }
