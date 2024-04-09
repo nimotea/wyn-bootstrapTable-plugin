@@ -71,7 +71,22 @@
                     }
                 ],
                 "defaultValue": "none"
-            }]
+            }],
+            "watchParameter": {
+                "roles": [
+                    {
+                        "name": "minDate",
+                        "displayName": "最小时间",
+                        "displayNameKey": "最小时间"
+                    },
+                    {
+                        "name": "maxDate",
+                        "displayName": "最大时间",
+                        "displayNameKey": "最大时间"
+                    }
+                ],
+                "staticOnly": false
+            }
         },
         {
             "type" : "title",
@@ -241,6 +256,23 @@
                     "type" : "Boolean",
                     "displayName" : "报表自动排序",
                     "defaultValue" : true
+                },
+                {
+                    "name" : "__tab__bindReportFilterCondition",
+                    "displayName" : "报表筛选条件",
+                    "type" : "Collection",
+                    "itemShape" : [
+                        {
+                            "name" : "param_name",
+                            "displayName" : "参数名",
+                            "type" : "Text"
+                        },
+                        {
+                            "name" : "param_value",
+                            "displayName" : "参数值",
+                            "type" : "Text"
+                        }
+                    ]
                 }
             ]
         },

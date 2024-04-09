@@ -53,6 +53,7 @@ export default class Visual extends WynVisual {
   private options: VisualNS.IVisualUpdateOptions;
   private profile: any;
   private isMock : boolean = true;
+  private watchedParameters : any;
   
   private static root : Visual;
   private static orderField: string;
@@ -159,7 +160,31 @@ export default class Visual extends WynVisual {
         option.parameters["orderBy"] = [Visual.orderBy];
       }
     }
+
+    if(this.isValidParameter(this.watchedParameters.minDate)){
+      option.parameters["minDate"] = [this.watchedParameters.minDate.value[0]];
+    }
+
+    if(this.isValidParameter(this.watchedParameters.maxDate)){
+      option.parameters["maxDate"] = [this.watchedParameters.maxDate.value[0]];
+    }
+    if(Visual.root._resolveStyle.global["bindReportFilterCondition"].length > 0){
+      Visual.root._resolveStyle.global["bindReportFilterCondition"].forEach(item => {
+      option.parameters[item["param_name"]] = [item["param_value"]];
+      });
+    }
     return JSON.stringify(option);
+  }
+
+  private isValidParameter(para) {
+    if (!para) {
+      return false;
+    }
+    const { meta, value } = para;
+    if ((meta.dataType !== 'DateTime' && meta.dataType !== 'Date') || value.length === 0 || meta.multiValue || meta.type !== 'dynamic') {
+      return false;
+    }
+    return true;
   }
 
   public selectData(ele:any){
@@ -183,6 +208,7 @@ export default class Visual extends WynVisual {
   }
  
   public update(options: VisualNS.IVisualUpdateOptions) {
+    this.watchedParameters = options.watchedParameters;
     this.styleConfig = options.properties;
     this._resolveStyle= this.stylePropFilter();
 
