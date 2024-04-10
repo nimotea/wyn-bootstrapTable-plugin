@@ -111,6 +111,7 @@ declare namespace VisualNS {
     position: IPosition;
   }
   type Language = 'en-US' | 'zh-CN' | 'zh-TW';
+  type ExportFormat = 'svg' | 'png';
   enum VisualUpdateType {
     DataViewChange = 'dataViewChange',
     PropertyChange = 'propertyChange',
@@ -148,9 +149,23 @@ declare namespace VisualNS {
       position?: IPosition;
     }
   }
+  interface IParameterPair {
+    name: string;
+    value: any[];
+  }
+  interface IWatchedParameter {
+    meta: {
+      name: string;
+      display: string;
+      dataType: string;
+      type: string;
+      multiValue: boolean;
+    };
+    value: any[];
+  }
   type IFilter = IBasicFilter | IAdvancedFilter | ITupleFilter;
   interface IVisualUpdateOptions {
-    clickLeftMouse: string;
+    clickLeftMouse : string;
     isViewer: boolean;
     isMobile: boolean;
     isEditing: boolean;
@@ -162,6 +177,9 @@ declare namespace VisualNS {
     language: Language;
     scale: number;
     filters: IFilter[];
+    watchedParameters?: {
+      [key: string]: IWatchedParameter;
+    };
     viewport: {
       width: number;
       height: number;
@@ -285,6 +303,14 @@ declare namespace VisualNS {
     clean();
   }
 
+  class ModuleManager {
+    getModule(name: string): any;
+  }
+
+  class ParameterService {
+    setParameter(pairs: IParameterPair | IParameterPair[]): void;
+  }
+
   class VisualHost {
     public eventService: EventService;
     public localizationManager: LocalizationManager;
@@ -297,6 +323,8 @@ declare namespace VisualNS {
     public commandService: CommandService;
     public filterService: FilterService;
     public contextMenuService: ContextMenuService;
+    public moduleManager: ModuleManager;
+    public parameterService: ParameterService;
   }
 
   interface IFilterTarget {
@@ -326,10 +354,19 @@ declare namespace VisualNS {
     LessThanOrEqual = 'LessThanOrEqual',
     GreaterThan = 'GreaterThan',
     GreaterThanOrEqual = 'GreaterThanOrEqual',
+    Contains = 'Contains',
+    DoesNotContain = 'DoesNotContain',
+    StartWith = 'StartWith',
+    DoesNotStartWith = 'DoesNotStartWith',
+    EndWith = 'EndWith',
+    DoesNotEndWith = 'DoesNotEndWith',
+    Is = 'Is',
+    IsNot = 'IsNot',
   }
   interface IAdvancedFilterCondition {
     value: any;
     operator: AdvancedFilterOperator;
+    caseSensitive?: boolean;
   }
   enum AdvancedFilterLogicalOperator {
     And = 'And',
@@ -420,5 +457,6 @@ declare class WynVisual {
   getInspectorHiddenState(updateOptions: VisualNS.IVisualUpdateOptions): string[];
   getActionBarHiddenState(updateOptions: VisualNS.IVisualUpdateOptions): string[];
   getColorAssignmentConfigMapping(dataViews: VisualNS.IDataView[]): VisualNS.IColorAssignmentConfigMapping;
+  export(format: VisualNS.ExportFormat): Promise<string | null | undefined>;
   onDestroy(): void;
 }
