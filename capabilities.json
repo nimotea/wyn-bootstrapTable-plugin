@@ -83,6 +83,26 @@
                         "name": "maxDate",
                         "displayName": "最大时间",
                         "displayNameKey": "最大时间"
+                    },
+                    {
+                        "name": "singleVar1",
+                        "displayName": "单值参数1",
+                        "displayNameKey": "单值参数1"
+                    },
+                    {
+                        "name": "singleVar2",
+                        "displayName": "单值参数2",
+                        "displayNameKey": "单值参数2"
+                    },
+                    {
+                        "name": "multVar1",
+                        "displayName": "多值参数1",
+                        "displayNameKey": "多值参数1"
+                    },
+                    {
+                        "name": "multVar2",
+                        "displayName": "多值参数2",
+                        "displayNameKey": "多值参数2"
                     }
                 ],
                 "staticOnly": false
@@ -518,6 +538,9 @@
             "type": "filter"
             
             },
+        {
+            "type": "rank"
+    },
             {
                 "name": "exportReport",
                 "type": "event",

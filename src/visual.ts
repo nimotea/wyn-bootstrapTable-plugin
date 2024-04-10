@@ -129,6 +129,8 @@ export default class Visual extends WynVisual {
           method: 'POST',
           body: this.generateReportParam(),
         }
+        console.log(`请求信息: ${JSON.stringify(option)}`);
+        
         return fetch(`/api/v2.0/reporting/reports/${reportId}/export/${reportTemplateId}`,option)
       })
       .then(response => response.json())
@@ -144,6 +146,9 @@ export default class Visual extends WynVisual {
           element.click();
           document.body.removeChild(element);
         }
+      })
+      .catch( err => {
+        console.error(`导出报表错误 : ${err}`)
       })
 
 
@@ -161,13 +166,26 @@ export default class Visual extends WynVisual {
       }
     }
 
-    if(this.isValidParameter(this.watchedParameters.minDate)){
+    if(this.isValidDateParameter(this.watchedParameters.minDate)){
       option.parameters["minDate"] = [this.watchedParameters.minDate.value[0]];
     }
 
-    if(this.isValidParameter(this.watchedParameters.maxDate)){
+    if(this.isValidDateParameter(this.watchedParameters.maxDate)){
       option.parameters["maxDate"] = [this.watchedParameters.maxDate.value[0]];
     }
+    /* if(this.isValidDateParameter(this.watchedParameters.minDate)){
+      option.parameters["minDate"] = [this.watchedParameters.minDate.value[0]];
+    }
+
+    if(this.isValidDateParameter(this.watchedParameters.maxDate)){
+      option.parameters["maxDate"] = [this.watchedParameters.maxDate.value[0]];
+    }if(this.isValidDateParameter(this.watchedParameters.minDate)){
+      option.parameters["minDate"] = [this.watchedParameters.minDate.value[0]];
+    }
+
+    if(this.isValidDateParameter(this.watchedParameters.maxDate)){
+      option.parameters["maxDate"] = [this.watchedParameters.maxDate.value[0]];
+    } */
     if(Visual.root._resolveStyle.global["bindReportFilterCondition"].length > 0){
       Visual.root._resolveStyle.global["bindReportFilterCondition"].forEach(item => {
       option.parameters[item["param_name"]] = [item["param_value"]];
@@ -176,7 +194,28 @@ export default class Visual extends WynVisual {
     return JSON.stringify(option);
   }
 
-  private isValidParameter(para) {
+  private isValidSingleParameter(para) {
+    if (!para) {
+      return false;
+    }
+    const { meta, value } = para;
+    if (meta.dataType !== 'Text' || value.length === 0 || meta.multiValue || meta.type !== 'dynamic') {
+      return false;
+    }
+    return true;
+  }
+ /*  private isValidMultParameter(para) {
+    if (!para) {
+      return false;
+    }
+    const { meta, value } = para;
+    if ((meta.dataType !== 'Text' && meta.dataType !== 'Date') || value.length === 0 || !meta.multiValue || meta.type !== 'dynamic') {
+      return false;
+    }
+    return true;
+  } */
+
+  private isValidDateParameter(para) {
     if (!para) {
       return false;
     }
@@ -527,7 +566,7 @@ public leftClick(pageX : number,pageY :number){
   
 
   public onDestroy(): void {
-
+    $("#_table").bootstrapTable('destroy');
   }
 
   public getInspectorHiddenState(options: VisualNS.IVisualUpdateOptions): string[] {
