@@ -11,7 +11,8 @@
         "images": {
             "visualIcon": "assets/table.png",
             "descIcon":"assets/sort-descending.png",
-            "ascIcon":"assets/sort-ascending.png"
+            "ascIcon":"assets/sort-ascending.png",
+            "excelIcon":"assets/excel.png"
         }
     },
     "configuration": {},

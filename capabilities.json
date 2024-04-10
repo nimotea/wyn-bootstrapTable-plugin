@@ -489,7 +489,7 @@
             {
                 "name": "exportReport",
                 "type": "event",
-                "icon": "export",
+                "icon": "excelIcon",
                 "displayName": "导出报表"
                 
                 }],
