@@ -71,7 +71,7 @@ export default class Visual extends WynVisual {
 
   constructor(dom: HTMLDivElement, host: VisualNS.VisualHost, options: VisualNS.IVisualUpdateOptions) {
     super(dom, host, options);
-    
+
     // document.oncontextmenu = function () { return false; };
     dom.style.backgroundColor="rgba(0,0,0,0)";
 
@@ -250,6 +250,10 @@ export default class Visual extends WynVisual {
     this.watchedParameters = options.watchedParameters;
     this.styleConfig = options.properties;
     this._resolveStyle= this.stylePropFilter();
+
+
+    Visual.orderField = Visual.root._resolveStyle.global["sortField"];;
+    Visual.orderBy = Visual.root._resolveStyle.global["sortType"];
 
     Visual.defaultConfig.headerStyle = this.headerStyle;
     Visual.defaultConfig.rowStyle = this.rowStyle;
