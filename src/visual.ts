@@ -75,6 +75,8 @@ export default class Visual extends WynVisual {
     // document.oncontextmenu = function () { return false; };
     dom.style.backgroundColor="rgba(0,0,0,0)";
 
+    dom.style.overflow = "auto";
+
 
     // init global manager;
     this.selectionIds = [];
@@ -254,6 +256,11 @@ export default class Visual extends WynVisual {
 
     Visual.orderField = Visual.root._resolveStyle.global["sortField"];;
     Visual.orderBy = Visual.root._resolveStyle.global["sortType"];
+    if(Visual.root._resolveStyle.global["showSroll"]){
+      $(this.dom).css("scrollbarWidth","thin");
+    }else{
+      $(this.dom).css("scrollbarWidth","none");
+    }
 
     Visual.defaultConfig.headerStyle = this.headerStyle;
     Visual.defaultConfig.rowStyle = this.rowStyle;

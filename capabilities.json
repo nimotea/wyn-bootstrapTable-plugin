@@ -111,7 +111,6 @@
         {
             "type" : "title",
             "defaultValue": "表格数据"
-            
         },
         {
             "displayName" : "表格设置",
@@ -135,6 +134,12 @@
                         }
                     ],
                     "defaultValue" : "center"
+                },
+                {
+                    "name" : "__tab__showSroll",
+                    "displayName" : "是否显示滚轮",
+                    "type" : "Boolean",
+                    "defaultValue" : false
                 },
                 {
                     "name" : "__tab__dombgColor",
